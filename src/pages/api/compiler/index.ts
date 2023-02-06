@@ -10,7 +10,27 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       } catch (error) {}
     case "POST":
       try {
-      } catch (error) {}
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            clientId: process.env.JDOODLE_CLIENT_ID,
+            clientSecret: process.env.JDOODLE_CLIENT_SECRET,
+            script: body.code,
+            language: body.language,
+            versionIndex: "0",
+          }),
+        };
+        const response = await fetch(
+          `${process.env.JDOODLE_BASE_URL}/execute`,
+          requestOptions
+        );
+        const parsedResponse = await response.json();
+        res.status(201).json(parsedResponse);
+      } catch (error) {
+        console.log(error);
+      }
+      break;
     default:
       return res.status(400).json({ msg: `Unsupported method ${method}` });
   }
