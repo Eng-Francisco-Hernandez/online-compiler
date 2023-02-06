@@ -8,7 +8,11 @@ import {
   Select,
 } from "semantic-ui-react";
 import { useState } from "react";
-import { selectLanguageSettings, themeSettings } from "@/utils/util-constants";
+import {
+  programs,
+  selectLanguageSettings,
+  themeSettings,
+} from "@/utils/util-constants/util-constants";
 
 const CodeEditor = dynamic(
   () => import("@/components/code-editor/CodeEditor"),
@@ -20,7 +24,9 @@ const Terminal = dynamic(() => import("@/components/terminal/Terminal"), {
 });
 
 export default function Index() {
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState(
+    programs.find((item) => item.key === "nodejs")!.program
+  );
   const [result, setResult] = useState("$ ");
   const [language, setLanguage] = useState("nodejs");
   const [theme, setTheme] = useState("monokai");
@@ -56,7 +62,12 @@ export default function Index() {
                   placeholder="Language"
                   options={selectLanguageSettings}
                   value={language}
-                  onChange={(e: any, { value }) => setLanguage(value as any)}
+                  onChange={(e: any, { value }) => {
+                    setCode(
+                      programs.find((item) => item.key === value)!.program
+                    );
+                    setLanguage(value as any);
+                  }}
                 />
               </Menu>
             </Grid.Column>

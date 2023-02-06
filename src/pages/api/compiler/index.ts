@@ -1,4 +1,4 @@
-import { coreLanguageSettings } from "@/utils/util-constants";
+import { coreLanguageSettings } from "@/utils/util-constants/util-constants";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

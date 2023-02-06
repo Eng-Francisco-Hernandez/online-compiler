@@ -23,7 +23,7 @@ import "ace-builds/src-noconflict/theme-solarized_dark";
 import "ace-builds/src-noconflict/theme-solarized_light";
 
 import "ace-builds/src-noconflict/ext-language_tools";
-import { coreLanguageSettings } from "@/utils/util-constants";
+import { coreLanguageSettings } from "@/utils/util-constants/util-constants";
 
 interface CodeEditorProps {
   code: string;
