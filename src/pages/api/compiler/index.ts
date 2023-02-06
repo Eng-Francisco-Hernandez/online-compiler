@@ -1,3 +1,4 @@
+import { coreLanguageSettings } from "@/utils/util-constants";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -17,8 +18,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             clientId: process.env.JDOODLE_CLIENT_ID,
             clientSecret: process.env.JDOODLE_CLIENT_SECRET,
             script: body.code,
-            language: body.language,
-            versionIndex: "0",
+            language: coreLanguageSettings.find(
+              (item) => item.key === body.language
+            )!.key,
+            versionIndex: coreLanguageSettings.find(
+              (item) => item.key === body.language
+            )!.versionIndex,
           }),
         };
         const response = await fetch(
