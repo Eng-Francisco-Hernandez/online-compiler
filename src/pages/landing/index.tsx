@@ -1,13 +1,14 @@
 import dynamic from "next/dynamic";
+import { useState } from "react";
 import {
   Button,
   Container,
   Grid,
   Header,
+  Icon,
   Menu,
   Select,
 } from "semantic-ui-react";
-import { useState } from "react";
 import {
   programs,
   selectLanguageSettings,
@@ -29,7 +30,7 @@ export default function Index() {
   );
   const [result, setResult] = useState("$ ");
   const [language, setLanguage] = useState("nodejs");
-  const [theme, setTheme] = useState("monokai");
+  const [theme, setTheme] = useState("solarized_dark");
 
   const compileCode = async () => {
     setResult(" ... Loading ...");
@@ -49,7 +50,7 @@ export default function Index() {
   };
 
   return (
-    <Container style={{ marginTop: "3em", minWidth: "90%" }}>
+    <Container className="main-container">
       <Header as="h2" dividing>
         Online compiler
       </Header>
@@ -105,6 +106,26 @@ export default function Index() {
         </Grid.Column>
         <Grid.Column>
           <Terminal result={result} />
+        </Grid.Column>
+      </Grid>
+      <Grid columns="1" style={{ marginTop: "0" }}>
+        <Grid.Column
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Header style={{ marginTop: "15px" }} as="h4" floated="right">
+            Built by Francisco Hernández
+          </Header>
+          <Menu.Item
+            href="https://github.com/Eng-Francisco-Hernandez/online-compiler"
+            position="right"
+            target="_blank"
+          >
+            <Icon link name="github" inverted size="big" />
+          </Menu.Item>
         </Grid.Column>
       </Grid>
     </Container>
