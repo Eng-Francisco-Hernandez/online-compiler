@@ -37,7 +37,7 @@ export default function Index({ attemptsLeft = 100 }) {
   const compileCode = async () => {
     setResult(" ... Loading ...");
     try {
-      const response = await fetch("/api/compiler", {
+      const response = await fetch(`${process.env.BASE_URL}/api/compiler`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -144,9 +144,8 @@ export default function Index({ attemptsLeft = 100 }) {
 }
 
 export async function getServerSideProps() {
-  const res = await fetch("/api/compiler");
+  const res = await fetch(`${process.env.BASE_URL}/api/compiler`);
   const parsedResponse = await res.json();
-  console.log(parsedResponse);
   return {
     props: {
       attemptsLeft: 100 - parsedResponse.used,
