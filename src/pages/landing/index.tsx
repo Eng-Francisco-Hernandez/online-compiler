@@ -8,6 +8,7 @@ import {
   Icon,
   Menu,
   Select,
+  Statistic,
 } from "semantic-ui-react";
 import {
   programs,
@@ -24,18 +25,19 @@ const Terminal = dynamic(() => import("@/components/terminal/Terminal"), {
   ssr: false,
 });
 
-export default function Index() {
+export default function Index({ attemptsLeft = 100 }) {
   const [code, setCode] = useState(
     programs.find((item) => item.key === "nodejs")!.program
   );
   const [result, setResult] = useState("$ ");
   const [language, setLanguage] = useState("nodejs");
   const [theme, setTheme] = useState("solarized_dark");
+  const [attemptsUsedInSession, setAttemptsUsedInSession] = useState(0);
 
   const compileCode = async () => {
     setResult(" ... Loading ...");
     try {
-      const response = await fetch(`/api/compiler`, {
+      const response = await fetch("/api/compiler", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,6 +46,7 @@ export default function Index() {
       });
       const parsedResponse = await response.json();
       setResult(parsedResponse.output);
+      setAttemptsUsedInSession((prevValue) => prevValue + 1);
     } catch (error) {
       console.error(error);
     }
@@ -94,6 +97,14 @@ export default function Index() {
             </Grid.Column>
           </Grid>
         </Grid.Column>
+        <Grid.Column>
+          <Statistic size="tiny" inverted floated="right">
+            <Statistic.Value>
+              {attemptsLeft - attemptsUsedInSession}
+            </Statistic.Value>
+            <Statistic.Label>Runs left for today</Statistic.Label>
+          </Statistic>
+        </Grid.Column>
       </Grid>
       <Grid columns="2" stackable>
         <Grid.Column>
@@ -130,4 +141,15 @@ export default function Index() {
       </Grid>
     </Container>
   );
+}
+
+export async function getServerSideProps() {
+  const res = await fetch("http://localhost:3000/api/compiler");
+  const parsedResponse = await res.json();
+  console.log(parsedResponse);
+  return {
+    props: {
+      attemptsLeft: 100 - parsedResponse.used,
+    },
+  };
 }
