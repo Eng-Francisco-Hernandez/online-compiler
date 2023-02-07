@@ -144,7 +144,7 @@ export default function Index({ attemptsLeft = 100 }) {
 }
 
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:3000/api/compiler");
+  const res = await fetch("/api/compiler");
   const parsedResponse = await res.json();
   console.log(parsedResponse);
   return {
