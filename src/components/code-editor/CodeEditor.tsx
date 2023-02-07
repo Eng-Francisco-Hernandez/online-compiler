@@ -45,7 +45,6 @@ export default function CodeEditor(props: CodeEditorProps) {
       name="codeEditor"
       fontSize={18}
       width={"100%"}
-      height={"100%"}
       showPrintMargin={true}
       showGutter={true}
       highlightActiveLine={true}

@@ -59,7 +59,7 @@ export default function Index({ attemptsLeft = 100 }) {
       </Header>
       <Grid columns="2">
         <Grid.Column>
-          <Grid columns="3">
+          <Grid columns="3" stackable>
             <Grid.Column>
               <Menu compact style={{ marginRight: "20px" }}>
                 <Select
